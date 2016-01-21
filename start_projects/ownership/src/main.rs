@@ -52,7 +52,7 @@ static Foo:i32 = 5;
 
 
 // control of life time for function and struct
-struct Foo<'a> {
+pub struct Foo<'a> {
     x: &'a i32,
 }
 
