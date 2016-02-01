@@ -42,10 +42,89 @@ fn main() {
 			Message::Write(s) =>write(s),
 			_ => quit(),  // contain all remaining condition, since it already
 							// iterate all Message, not always neeeded here
+			// _ => quit(),
 		}
 	}
 	process_message(test_quit);
 	process_message(test_write);
 	process_message(test_move);
 	process_message(test_change_color);
+
+	// multiple matching
+	let multiple_test = 1;
+	match multiple_test{
+		1|2 => println!("match 1 or 2, truth: {}",multiple_test),
+		_ => println!("Others"),
+
+	}
+
+
+
+	// deconstructing of object
+	struct Point{
+		x: i32,
+		y: i32,
+	}
+
+	let origin = Point{x:7, y:8};
+	match origin{
+		Point{y,..} =>println!("y of Point is {}",y),
+	}
+
+	match origin{
+		Point{x,y} =>println!("x:{}, y:{}", x,y),
+	}
+
+	match origin{
+		Point{x:x1, y:y1}=>println!("x: {}, y: {}", x1,y1),
+	}
+
+	enum OptionalTuple {
+	    Value(i32, i32, i32),
+	    Missing,
+	}
+
+	let x = OptionalTuple::Value(5, -2, 3);
+
+	match x {
+	    OptionalTuple::Value(..) => println!("Got a tuple!"),
+	    OptionalTuple::Missing => println!("No such luck."),
+	}
+
+	let x = 5;
+	match x{
+		ref r => println!("get the reference to {}", r),
+	}
+
+	match x{
+		1...10 => println!("get inside [1,10]"),
+		_ => println!("Something else"),
+	}
+
+	struct Person{
+		name: Option<String>,
+	}
+	let name = "steve".to_string();
+	let mut x:Option<Person> = Some(Person{name:Some(name)});
+	match x{
+		Some(Person{name: ref a @ Some(_),..})=>println!("{:?}", a),
+		_=>{},
+	}
+
+	enum OptionalInt {
+	    Value(i32),
+	    Missing,
+	}
+
+	let x = OptionalInt::Value(10);
+
+	match x {
+	    OptionalInt::Value(a @ _) if  a > 5 => println!("Got an int bigger than five!,{}",a),
+	    OptionalInt::Value(..) => println!("Got an int!"),
+	    OptionalInt::Missing => println!("No such luck."),
+	}
+
+
 }
+
+
