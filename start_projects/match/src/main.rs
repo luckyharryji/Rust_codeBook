@@ -36,10 +36,12 @@ fn main() {
 	
 	fn process_message(meg:Message){
 		match meg{
-			Message::Quit => quit(),
+			// Message::Quit => quit(),
 			Message::ChangeColor(a,b)=>change_color(a,b),
 			Message::Move{x:a, y:b}=>move_cursor(a,b),
 			Message::Write(s) =>write(s),
+			_ => quit(),  // contain all remaining condition, since it already
+							// iterate all Message, not always neeeded here
 		}
 	}
 	process_message(test_quit);
